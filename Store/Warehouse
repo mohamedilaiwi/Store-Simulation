@@ -1,0 +1,51 @@
+import java.util.*;
+
+public class Warehouse {
+   private HashMap<String, Integer> prodPrice;
+   private HashMap<String, Integer> prodStock;
+
+   public Warehouse() {
+      prodPrice = new HashMap<>();
+      prodStock = new HashMap<>();
+   }
+
+   public void addProduct(String product, int price, int stock) {
+      prodPrice.put(product, price);
+      prodStock.put(product, stock);
+   }
+
+   public int price(String product) {
+      if(prodPrice.containsKey(product)){
+         return prodPrice.get(product);
+      }
+      return -99;
+   }
+
+   public int stock(String product) {
+      if(prodStock.containsKey(product)){
+         return prodStock.get(product);
+      }
+      return 0;
+   }
+
+   public boolean take(String product) {
+      Integer count = prodStock.get(product);
+      if(count == null)
+      {
+         return false;
+      }
+      if(prodStock.get(product) > 0){
+        for(Map.Entry m : prodStock.entrySet()){
+            if(m.getKey().equals(product)){
+               prodStock.put(product, count - 1);
+               return true;
+            }
+        }
+      }
+      return false;
+   }
+
+   public Set<String> products() {
+         return prodStock.keySet();
+   }
+}
